@@ -10,7 +10,7 @@
 function SMODS.INIT.soulcraft() 
 
   G.localization.misc.dictionary["b_break"] = "分解"
-  G.localization.misc.dictionary["b_upgrade"] = "升级"
+  G.localization.misc.dictionary["b_upgrade"] = "镶嵌"
   G.localization.misc.dictionary["b_soul"] = "灵魂"
   G.localization.misc.dictionary["b_crystal"] = "水晶"
   G.localization.misc.dictionary["b_misprint"] = "印错"
@@ -33,8 +33,8 @@ soul_crystal={
 enhance_crystal={
   name = "强化水晶",
         text= {
-		  "蕴含着神秘力量",
-		   "可以给予特殊的{C:attention}强化"
+		  "蕴含{C:purple}神秘力量",
+		   "的{C:attention}特殊{}水晶"
         }
   },
 }
@@ -205,42 +205,41 @@ Souls.legendary_soul.text={
 ------------------------
 Souls.enhance_soul_eternal.text={
     "选择{C:attention}盲注{}时",
-	"给予小丑牌{C:attention}永恒{}",
-    "此牌可以{C:attention}无视永恒",
-	"售出,分解"
+	"给予小丑牌{C:dark_edition}永恒{}",
+    "并使得此牌可以",
+	"{C:attention}无视永恒{}被售出或分解"
 }
 Souls.enhance_soul_slot.text={
-   "{C:blue}灵魂{}槽位{C:attention}+#1#{}"
+   "{C:attention}+#1#{}{C:blue}灵魂{}槽位"
 }
 Souls.enhance_soul_split.text={
     "选择{C:attention}盲注{}时",
-	"{C:green}#2#/#1#{}概率{C:attention}复制{}自身",
-     "{C:inactive}(须有空间)"
+	"有{C:green}#2#/#1#{}几率{C:attention}复制{}此牌",
+     "{C:inactive}(必须有空间)"
 }
 Souls.enhance_soul_mutation.text = {
-   "自身某些数值{C:red}X#1#"
+   "此牌的某些数值{C:red}X#1#"
 }
 Souls.enhance_soul_unwilling.text = {
-   "每个盲注限{C:attention}一{}次",
-   "此牌被{C:attention}出售{}后",
+   "每个盲注限{C:attention}一次",
+   "{C:attention}出售{}此牌时",
    "加入一张此牌的{C:attention}复制"
    
 }
 Souls.enhance_soul_source.text = {
-   "可升级，每级",
-   "减少盲注分数",
-   "的{C:blue}#1#%",
+   "可叠加升级",
+   "每级减少{C:blue}#1#%",
+   "的盲注分数",
    "{C:inactive}(当前:{C:purple}#2#{}{C:inactive}级)"
 }
 Souls.enhance_soul_clear.text = {
-   "清除身上",
+   "清除此牌",
    "的所有{C:blue}灵魂",
-   "以及易腐，租用，永恒"
+   "以及易腐，{C:money}租用{}和{C:dark_edition}永恒{}效果"
 }
 Souls.enhance_soul_zhongliu.text = {
-   "此牌{C:attention}视为{}加入",
-   "{C:inactive}(重新触发此牌",
-   "{C:inactive}加入时的效果)",
+   "{C:attention}重新触发{}一次",
+   "此牌加入时的效果",
 }
 ------------------------
 Souls.j_abstract.text = {
@@ -248,111 +247,134 @@ Souls.j_abstract.text = {
    "{C:mult}+#1#{}倍率"
 }
 Souls.j_midas_mask.text = {
-   "打出的所有{C:attention}人头牌",
-   "在计分时",
-   "变成{C:attention}黄金牌"
+   "所有打出的{C:attention}人头牌",
+   "将在计分时",
+   "变为{C:attention}黄金牌"
 }
 Souls.j_perkeo.text = {
-   "离开商店时",
-   "随机复制{C:attention}1{}张消耗牌",
-   "并给予其{C:dark_edition,s:0.9}负片{}效果"
+   "在离开商店时",
+   "随机复制{C:attention}1{}张",
+   "拥有的消耗牌",
+   "并给那张牌{C:dark_edition,s:0.9}负片{}效果"
 }
 Souls.j_madness.text = {
-    "选择{C:attention}盲注{}时，自身某些数值{C:mult}+#1#",
-	"然后{C:attention}摧毁{}一张小丑牌"
+    "选择{C:attention}盲注{}时",
+	"随机{C:attention}摧毁{}一张小丑牌",
+    "并使此牌的某些数值{C:mult}+#1#"
 }
 Souls.j_vampire.text = {
-    "每打出一张计分的增强牌，自身某些数值{C:mult}+#1#",
-	"并移除卡牌的{C:attention}增强效果"
+    "打出计分增强牌时",
+	"移除此牌的{C:attention}增强效果",
+    "并使此牌的某些数值{C:mult}+#1#"
 }
 Souls.j_mime.text = {
-    "自身所有{C:blue}灵魂{}效果",
-	"均会多触发一遍"
+   "此牌所有的{C:blue}灵魂{}效果",
+   "将额外触发一次"
 }
 Souls.j_dusk.text = {
-   "{C:attention}最后一次出牌时{}",
-   "自身所有{C:blue}灵魂{}效果",
-   "均会多触发两遍"
+   "每回合{C:attention}最后一次{}出牌时",
+   "此牌所有的{C:blue}灵魂{}效果",
+   "将额外触发两次"
 }
 Souls.j_mystic_summit.text = {
-   "出牌时，若弃牌次数为{C:attention}0{}",
-   "自身某些数值{C:mult}+#1#"
+   "每次出牌时",
+   "若剩余{C:attention}弃牌次数{}为{C:attention}0{}",
+   "则使此牌的某些数值{C:mult}+#1#"
 }
 Souls.j_baron.text = {
-   "出牌时，每张与第{C:attention}1{}张记分牌",
-   "{C:attention}点数相同{}的手牌给予{X:mult,C:white}X#1#{}倍率",
+   "每张与打出的",
+   "{C:attention}第一张{}计分牌",
+   "{C:attention}点数相同{}的手牌",
+   "将给予{X:mult,C:white}X#1#{}倍率",
 }
 Souls.j_rough_gem.text = {
-   "若打出的记分牌的花色",
-   "是当前所有记分牌中数量{C:attention}最多{}的花色之一",
-   "其给予{C:money}$#1#"
+   "若打出的计分牌花色",
+   "是所有计分牌中数量{C:attention}最多{}的花色",
+   "则其计分时给予{C:money}$#1#"
 }
 Souls.j_oops.text = {
-   "出牌时，概率变为{C:green}#1#{}倍"
+   "每次出牌时",
+   "将所有以{C:attention}数字标注{}出的",
+   "{C:green}几率{}暂时{C:green}X#1#{}",   
 }
 Souls.j_troubadour.text = {
    "{C:attention}+2{}手牌上限",
    "每回合出牌次数{C:attention}-1"
 }
 Souls.j_glass.text = {
-   "所有的牌在计分时变为{C:attention}玻璃牌"
+   "所有打出的牌",
+   "将在计分时变为{C:attention}玻璃牌",
 }
 Souls.j_vagabond.text = {
-  "如果在出牌时资金",
-  "不大于自身{C:attention}售价",
+  "每次出牌时",
+  "如果当前资金数",
+  "不大于此牌{C:attention}售价",
   "则获得一张{C:purple}塔罗牌"
 }
 Souls.j_half.text = {
-   "如果身上的{C:blue}灵魂{}不大于{C:attention}2",
-   "{C:mult}+#1#{}倍率"
+   "如果此牌拥有的",
+   "{C:blue}灵魂{}数量不大于{C:attention}2",   
+   "则{C:mult}+#1#{}倍率"
 }
 Souls.j_stencil.text = {
-  "每个剩余的{C:blue}灵魂{}槽位",
-  "额外提供{X:mult,C:white}X#1#{}倍率",
+  "每个空的{C:blue}灵魂{}槽位",
+  "获得{X:mult,C:white}X#1#{}倍率",
 }
 Souls.j_egg.text = {
-   "回合结束时，本卡售价+#1#"
+   "回合结束时",
+   "此牌的售价{C:money}+#1#",
 }
 Souls.j_golden.text = {
-   "回合结束时，获得",
-   "与自身售价相等的资金"
+   "回合结束时",
+   "获得等同于此牌",
+   "{C:money}售价{}的资金",
 }
 Souls.j_misprint.text = {
-   "{C:blue}灵魂{}槽位{C:attention}+1",
-   "选择{C:attention}盲注{}时,将你身上",
-   "其它灵魂{C:attention}替换",
-   "为除此灵魂外的随机灵魂"
+   "{C:attention}+1{}{C:blue}灵魂{}槽位",
+   "选择{C:attention}盲注{}时",
+   "将此牌的其它{C:blue}灵魂",
+   "{C:attention}替换{}为随机{C:blue}灵魂"
 }
 Souls.j_baseball.text = {
-   "身上的每个{C:blue}灵魂{}",
-   "提供{X:mult,C:white}X#1#{}倍率"
+   "镶嵌的每个{C:blue}灵魂{}",
+   "会给予{X:mult,C:white}X#1#{}倍率"
 }
 Souls.j_credit_card.text = {
-   "可以负债20",
-   "回合结束后，获得",
-   "与自身售价等量的额度",
+   "可以负债最多{C:red}-20",
+   "回合结束时",
+   "额外获得等同于",
+   "此牌售价的额度",
    "{C:inactive}(当前额度:{C:attention}#1#{C:inactive})"
 }
 Souls.j_ceremonial.text = {
-   "选择{C:attention}盲注{}时，摧毁右侧的小丑牌",
-   "并将其购买价格乘自身稀有度",
-   "加到这张牌的{C:attention}售价{}上"
+   "选择{C:attention}盲注{}时",
+   "摧毁右侧的小丑牌",
+   "并根据被摧毁牌的{C:red}稀有度",
+   "将他的购价翻涨",
+   "加到这张牌的{C:attention}售价{}上",
+   "{C:inactive}(普通:1倍 罕见:2倍 稀有:3倍){}",
+   "{C:inactive}(传奇及其他:4倍){}",
 }
 Souls.j_banner.text = {
-   "每一个剩余的弃牌次数",
-   "提供与自身售价等量的倍率 "
+   "提供等同于本回合中",
+   "剩余{C:attention}弃牌次数",
+   "乘此牌{C:money}售价{}的倍率"
 }
 Souls.j_loyalty_card.text = {
-  "X与本回合出牌次数等量的倍率"
+  "提供等同于本回合中",
+  "已使用{C:attention}出牌次数{}的倍率",
 }
 Souls.j_chaos.text = {
-   "回合结束时，获得",
-   "与自身稀有度等量的",
-   "商店免费重置次数"
+   "回合结束时",
+   "根据此牌{C:red}稀有度{}",
+   "获得免费重掷次数",
+   "{C:inactive}(普通:1次 罕见:2次 稀有:3次){}",
+   "{C:inactive}(传奇及其他:4次){}",
 }
 Souls.j_blackboard.text = {
-   "若手牌中不存在",
-   "与记分牌{C:attention}相同的花色{}",
+   "如果留在手牌中的",
+   "所有牌的{C:attention}花色{}都",
+   "与{C:attention}计分牌{}不同",
    "则{X:mult,C:white}X#1#{}倍率" 
 }
 Souls.j_drunkard.text = {
@@ -363,49 +385,51 @@ Souls.j_juggler.text = {
 }
 Souls.j_cartomancer.text = {
    "选择{C:attention}盲注{}时",
-   "生成一张随机{C:purple}水晶",
-   "{C:inactive}(须有空间)"
+   "随机生成一张{C:purple}水晶",
+   "{C:inactive}(必须有空间)"
 }
 Souls.j_hallucination.text = {
-   "使用一张消耗区的牌后",
-   "{C:green}#2#/#1#{}概率花费{C:attention}$#3#",
-   "复制此消耗牌",
-   "{C:inactive}(须有空间)"
+   "使用消耗牌时",
+   "有{C:green}#2#/#1#{}几率",
+   "花费{C:attention}$#3#{}复制此消耗牌",
+   "{C:inactive}(必须有空间)"
 }
 Souls.j_luchador.text = {
-   "第{C:attention}二{}次出牌后",
-   "使当前{C:attention}boss盲注{}失效"
+   "每回合{C:attention}第二次{}出牌后",
+   "会消除当前回合中",
+   "{C:attention}Boss盲注{}的限制条件"
 }
 Souls.j_diet_cola.text = {
-   "出售此牌后",
-   "{C:attention}额外触发{}一次",
-   "出售此牌的效果"
+   "出售此牌时",
+   "{C:attention}重复触发{}",
+   "此牌的出售效果",
+   "{C:inactive}(如果有的话)"
 }
 ------------------------
 Souls.c_strength.text = {
-   "打出的每张计分牌",
-   "的点数{C:attention}+#1#"
+   "所有打出的牌",
+   "将在计分时{C:attention}点数+#1#"
 }
 Souls.c_chariot.text = {
-   "留在手中的钢铁牌",
-   "将给予{X:mult,C:white}X#1#{}倍率"
+   "每张手中的{C:attention}钢铁牌",
+   "额外给予{X:mult,C:white}X#1#{}倍率"
 }
 Souls.c_heirophant.text = {
-   "打出的每张记分牌",
-   "{C:blue}+#1#{}筹码"
+   "所有打出的牌",
+   "将在计分时{C:blue}+#1#{}筹码"
 }
 Souls.c_hermit.text = {
-   "售价{C:attention}X#1#"
+   "此牌的售价{C:attention}翻倍"
 }
 Souls.c_temperance.text = {
    "获得等同于此牌",
-   "{C:attention}X#1#{}售价的资金"
+   "{C:attention}#1#倍{}售价的{C:money}资金"
 }
 Souls.c_emperor.text = {
-   "{C:attention}+#1#{}消耗牌槽位"
+   "{C:dark_edition}+#1#{}消耗牌槽位"
 }
 Souls.c_judgement.text = {
-   "{C:attention}+#1#{}小丑牌槽位"
+   "{C:dark_edition}+#1#{}小丑牌槽位"
 }
 function soul_vars(soul)
     local seq = {soul.chips,soul.x_chips,soul.mult,soul.x_mult,soul.extra,soul.level,G.GAME.probabilities.normal,soul.dollars}
