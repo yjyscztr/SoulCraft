@@ -1,0 +1,26 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 0
+
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = '''UIBox_button({button = 'your_collection_tags', label = {localize('b_tags')}, count = G.DISCOVER_TALLIES.tags, minw = 5, id = 'your_collection_tags'}),'''
+position = "before"
+payload = '''
+ UIBox_button({button = 'your_collection_souls', label = {localize('b_soul')}, count = {tally = #souls, of = #souls}, minw = 5, id = 'your_collection_souls'}),
+'''
+match_indent = true
+overwrite = true
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''not self.ability.eternal then'''
+position = "at"
+payload = '''
+      not self.ability.eternal or (self.ability.eternal and find_soul(self,"enhance_soul_eternal")) then
+'''
+match_indent = true
+overwrite = true
