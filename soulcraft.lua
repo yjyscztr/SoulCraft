@@ -3,7 +3,8 @@
 --- MOD_ID: soulcraft
 --- MOD_AUTHOR: [AMADEUS]
 --- MOD_DESCRIPTION: enhance your jokers by souls
---- BADGE_COLOUR: CC99FF
+--- BADGE_COLOUR: 9400D3
+--- PRIORITY: 999999999999999
 ------------------------------
 ----------------------------------------------
 ------------MOD CODE -------------------------
@@ -17,7 +18,7 @@ function SMODS.INIT.soulcraft()
   G.localization.misc.dictionary["b_glass"] = "玻璃"
   G.localization.misc.dictionary["b_chips"] = "筹码"
   G.localization.misc.dictionary["b_mult"] = "倍率"
-  G.localization.misc.dictionary["b_freeroll"] = "免费重置次数"
+  G.localization.misc.dictionary["b_freeroll"] = "免费重掷次数"
   G.localization.misc.dictionary["b_points"] = "点数"
   G.localization.misc.dictionary["b_sellcost"] = "售价"
   G.localization.misc.dictionary["b_limit"] = "额度"
@@ -65,18 +66,18 @@ G.localization.descriptions.Other["soul_crystal"] = {
 	text = {
 	"通过{C:attention}分解小丑",
 	"或{C:attention}使用消耗牌",
-	"达到一定次数",
-	"或其它途径获得",
-	"能够升级小丑"
+	"获得的特殊卡牌",
+	"将此牌置于想要",
+	"镶嵌小丑的{C:attention}右侧"
 	}
 }
 G.localization.descriptions.Other["enhance_crystal"] = {
     name = "强化水晶",
     text = {
 	"通过{C:attention}使用消耗牌",
-	"达到一定次数",
-	"或其它途径获得",
-	"能够升级小丑"
+	"获得的特殊卡牌",
+	"将此牌置于想要",
+	"镶嵌小丑的{C:attention}右侧"
 	}
 }
 function SMODS.Jokers.j_soul_crystal.tooltip(card,info_queue)
@@ -235,7 +236,8 @@ Souls.enhance_soul_source.text = {
 Souls.enhance_soul_clear.text = {
    "清除此牌",
    "的所有{C:blue}灵魂",
-   "以及易腐，{C:money}租用{}和{C:dark_edition}永恒{}效果"
+   "以及易腐",
+   "{C:money}租用{}和{C:dark_edition}永恒{}"
 }
 Souls.enhance_soul_zhongliu.text = {
    "{C:attention}重新触发{}一次",
@@ -348,9 +350,9 @@ Souls.j_credit_card.text = {
 }
 Souls.j_ceremonial.text = {
    "选择{C:attention}盲注{}时",
-   "摧毁右侧的小丑牌",
+   "摧毁{C:attention}右侧{}的小丑牌",
    "并根据被摧毁牌的{C:red}稀有度",
-   "将他的购价翻涨",
+   "将它的购价翻涨",
    "加到这张牌的{C:attention}售价{}上",
    "{C:inactive}(普通:1倍 罕见:2倍 稀有:3倍){}",
    "{C:inactive}(传奇及其他:4倍){}",
