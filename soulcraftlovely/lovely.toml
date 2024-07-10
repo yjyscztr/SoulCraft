@@ -11,8 +11,8 @@ position = "before"
 payload = '''
  UIBox_button({button = 'your_collection_souls', label = {localize('b_soul')}, count = {tally = #souls, of = #souls}, minw = 5, id = 'your_collection_souls'}),
 '''
-match_indent = true
-overwrite = true
+match_indent = false
+
 
 [[patches]]
 [patches.pattern]
@@ -22,5 +22,4 @@ position = "at"
 payload = '''
       not self.ability.eternal or (self.ability.eternal and find_soul(self,"enhance_soul_eternal")) then
 '''
-match_indent = true
-overwrite = true
+match_indent = false
