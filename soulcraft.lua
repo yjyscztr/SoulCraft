@@ -3,7 +3,8 @@
 --- MOD_ID: soulcraft
 --- MOD_AUTHOR: [AMADEUS]
 --- MOD_DESCRIPTION: enhance your jokers by souls
---- BADGE_COLOUR: CC99FF
+--- BADGE_COLOUR: 9400D3
+--- PRIORITY: 999999999999999
 ------------------------------
 ----------------------------------------------
 ------------MOD CODE -------------------------
