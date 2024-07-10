@@ -1,5 +1,5 @@
 --- STEAMODDED HEADER
---- MOD_NAME: soulcraft
+--- MOD_NAME: Soulcraft
 --- MOD_ID: soulcraft
 --- MOD_AUTHOR: [AMADEUS]
 --- MOD_DESCRIPTION: enhance your jokers by souls
@@ -17,7 +17,7 @@ function SMODS.INIT.soulcraft()
   G.localization.misc.dictionary["b_glass"] = "玻璃"
   G.localization.misc.dictionary["b_chips"] = "筹码"
   G.localization.misc.dictionary["b_mult"] = "倍率"
-  G.localization.misc.dictionary["b_freeroll"] = "免费重置次数"
+  G.localization.misc.dictionary["b_freeroll"] = "免费重掷次数"
   G.localization.misc.dictionary["b_points"] = "点数"
   G.localization.misc.dictionary["b_sellcost"] = "售价"
   G.localization.misc.dictionary["b_limit"] = "额度"
@@ -33,12 +33,12 @@ soul_crystal={
 enhance_crystal={
   name = "强化水晶",
         text= {
-		  "蕴含着神秘力量",
-		   "可以给予特殊的{C:attention}强化"
-        }
-  },
-}
+		  "蕴含{C:purple}神秘力量",
+		  "的{C:attention}特殊{}水晶"
+  }
+},
 
+}
 local jokers= {
 soul_crystal = SMODS.Joker:new("soul_crystal", "soul_crystal", 
          {extra = "crystal"}, 
@@ -63,22 +63,33 @@ end
 G.localization.descriptions.Other["soul_crystal"] = {
     name = "灵魂水晶",
 	text = {
-	"通过{C:attention}分解小丑",
+	"通过{C:attention}分解小丑,",
 	"或{C:attention}使用消耗牌",
-	"达到一定次数",
+	"达到一定次数,",
 	"或其它途径获得",
-	"能够升级小丑"
+	"能够升级其左侧的一个小丑"
 	}
 }
 G.localization.descriptions.Other["enhance_crystal"] = {
     name = "强化水晶",
     text = {
 	"通过{C:attention}使用消耗牌",
-	"达到一定次数",
+	"达到一定次数,",
 	"或其它途径获得",
-	"能够升级小丑"
+	"能够升级其左侧的一个小丑"
 	}
 }
+
+G.localization.descriptions.Other["consumeable_count"] = {
+    name = "计数",
+    text = {
+	"再使用{C:attention}#1#{}次",
+	"同名消耗牌",
+	"获得一张{C:purple}水晶",
+	"{C:inactive}(必须有空间)"
+	}
+}
+
 function SMODS.Jokers.j_soul_crystal.tooltip(card,info_queue)
     info_queue[#info_queue+1] = { set = 'Other', key ="soul_crystal" }
 end
@@ -119,15 +130,15 @@ joker_soul = {
 j_abstract = {tag = "j_abstract", extra = 3, banned = false},
 j_midas_mask = {tag = "j_midas_mask", sole = true},
 j_perkeo = {tag = "j_perkeo"},
-j_madness = {tag = "j_madness", extra = 0.5},
-j_vampire = {tag ="j_vampire" , extra = 0.1},
-j_mime = {tag = "j_mime"},
-j_dusk = {tag = "j_dusk"},
-j_mystic_summit = {tag = "j_mystic_summit", extra = 0.1},
-j_baron = {tag = "j_baron", extra = 1.5},
+j_madness = {tag = "j_madness", extra = 0.5, value = 6},
+j_vampire = {tag ="j_vampire" , extra = 0.1, value = 6},
+j_mime = {tag = "j_mime", value = 7},
+j_dusk = {tag = "j_dusk", value = 4},
+j_mystic_summit = {tag = "j_mystic_summit", extra = 0.1, value = 4},
+j_baron = {tag = "j_baron", extra = 1.5, value = 5},
 j_rough_gem = {tag = "j_rough_gem", extra = 1},
 j_oops = {tag = "j_oops", extra = 6},
-j_troubadour = {tag = "j_troubadour"},
+j_troubadour = {tag = "j_troubadour", value = 3},
 j_glass = {tag = "j_glass", sole = true},
 j_vagabond = {tag = "j_vagabond"},
 j_half = {tag = "j_half", extra = 20},
@@ -139,15 +150,15 @@ j_baseball = {tag = "j_baseball", extra = 1},
 j_credit_card={tag = "j_credit_card", extra = 20},
 j_ceremonial = {tag = "j_ceremonial"},
 j_banner = {tag = "j_banner"},
-j_loyalty_card = {tag = "j_loyalty_card"},
-j_chaos = {tag = "j_chaos"},
-j_blackboard = {tag = "j_blackboard",extra = 3},
-j_juggler = {tag = "j_juggler", extra = 1},
-j_drunkard = {tag = "j_drunkard", extra = 1},
-j_cartomancer = {tag = "j_cartomancer"},
-j_hallucination = {tag = "j_hallucination", extra = 4, dollars = 3},
-j_luchador = {tag = "j_luchador"},
-j_diet_cola = {tag = "j_diet_cola"},
+j_loyalty_card = {tag = "j_loyalty_card", value = 3},
+j_chaos = {tag = "j_chaos", value = 7},
+j_blackboard = {tag = "j_blackboard",extra = 3, value = 5},
+j_juggler = {tag = "j_juggler", extra = 1, value = 3},
+j_drunkard = {tag = "j_drunkard", extra = 1, value = 3},
+j_cartomancer = {tag = "j_cartomancer", value = 5},
+j_hallucination = {tag = "j_hallucination", extra = 4, dollars = 2, value = 5},
+j_luchador = {tag = "j_luchador", value = 5},
+j_diet_cola = {tag = "j_diet_cola", value = 2},
 }
 
 consumeable_soul = {
@@ -205,42 +216,40 @@ Souls.legendary_soul.text={
 ------------------------
 Souls.enhance_soul_eternal.text={
     "选择{C:attention}盲注{}时",
-	"给予小丑牌{C:attention}永恒{}",
-    "此牌可以{C:attention}无视永恒",
-	"售出,分解"
+    "给予小丑牌{C:dark_edition}永恒{}",
+    "并使得此牌可以",
+	"{C:attention}无视永恒{}被售出或分解"
 }
 Souls.enhance_soul_slot.text={
-   "{C:blue}灵魂{}槽位{C:attention}+#1#{}"
+   "{C:attention}+#1#{}{C:blue}灵魂{}槽位"
 }
 Souls.enhance_soul_split.text={
     "选择{C:attention}盲注{}时",
-	"{C:green}#2#/#1#{}概率{C:attention}复制{}自身",
-     "{C:inactive}(须有空间)"
+	"{C:green}#2#/#1#{}几率{C:attention}复制{}自身",
+     "{C:inactive}(必须有空间)"
 }
 Souls.enhance_soul_mutation.text = {
-   "自身某些数值{C:red}X#1#"
+   "此牌的某些数值{C:red}X#1#"
 }
 Souls.enhance_soul_unwilling.text = {
-   "每个盲注限{C:attention}一{}次",
-   "此牌被{C:attention}出售{}后",
+   "每个盲注限{C:attention}一次",
+   "{C:attention}出售{}此牌时",
    "加入一张此牌的{C:attention}复制"
-   
 }
 Souls.enhance_soul_source.text = {
-   "可升级，每级",
-   "减少盲注分数",
-   "的{C:blue}#1#%",
+   "可叠加升级",
+   "每级减少{C:blue}#1#%",
+   "的盲注分数",
    "{C:inactive}(当前:{C:purple}#2#{}{C:inactive}级)"
 }
 Souls.enhance_soul_clear.text = {
-   "清除身上",
+   "清除此牌",
    "的所有{C:blue}灵魂",
    "以及易腐，租用，永恒"
 }
 Souls.enhance_soul_zhongliu.text = {
-   "此牌{C:attention}视为{}加入",
-   "{C:inactive}(重新触发此牌",
-   "{C:inactive}加入时的效果)",
+   "{C:attention}重新触发{}一次",
+   "此牌加入时的效果",
 }
 ------------------------
 Souls.j_abstract.text = {
@@ -258,29 +267,32 @@ Souls.j_perkeo.text = {
    "并给予其{C:dark_edition,s:0.9}负片{}效果"
 }
 Souls.j_madness.text = {
-    "选择{C:attention}盲注{}时，自身某些数值{C:mult}+#1#",
+    "选择{C:attention}盲注{}时，此牌某些数值{C:mult}+#1#",
 	"然后{C:attention}摧毁{}一张小丑牌"
 }
 Souls.j_vampire.text = {
-    "每打出一张计分的增强牌，自身某些数值{C:mult}+#1#",
+    "每打出一张计分的增强牌，此牌某些数值{C:mult}+#1#",
 	"并移除卡牌的{C:attention}增强效果"
 }
 Souls.j_mime.text = {
-    "自身所有{C:blue}灵魂{}效果",
-	"均会多触发一遍"
+   "此牌所有的{C:blue}灵魂{}效果",
+   "将{C:attention}重新触发{}一次"
 }
 Souls.j_dusk.text = {
-   "{C:attention}最后一次出牌时{}",
-   "自身所有{C:blue}灵魂{}效果",
-   "均会多触发两遍"
+   "每回合{C:attention}最后一次{}出牌时",
+   "此牌所有的{C:blue}灵魂{}效果",
+   "将{C:attention}重新触发{}两次"
 }
 Souls.j_mystic_summit.text = {
-   "出牌时，若弃牌次数为{C:attention}0{}",
-   "自身某些数值{C:mult}+#1#"
+   "每次出牌时",
+   "若剩余{C:attention}弃牌次数{}为{C:attention}0{}",
+   "则使此牌的某些数值{C:mult}+#1#"
 }
 Souls.j_baron.text = {
-   "出牌时，每张与第{C:attention}1{}张记分牌",
-   "{C:attention}点数相同{}的手牌给予{X:mult,C:white}X#1#{}倍率",
+   "每张与打出的",
+   "{C:attention}第一张{}计分牌",
+   "{C:attention}点数相同{}的手牌",
+   "将给予{X:mult,C:white}X#1#{}倍率",
 }
 Souls.j_rough_gem.text = {
    "若打出的记分牌的花色",
@@ -288,67 +300,83 @@ Souls.j_rough_gem.text = {
    "其给予{C:money}$#1#"
 }
 Souls.j_oops.text = {
-   "出牌时，概率变为{C:green}#1#{}倍"
+   "每次出牌时",
+   "将所有以{C:attention}数字标注{}出的",
+   "{C:green}几率{}暂时{C:green}X#1#{}",   
 }
 Souls.j_troubadour.text = {
    "{C:attention}+2{}手牌上限",
    "每回合出牌次数{C:attention}-1"
 }
 Souls.j_glass.text = {
-   "所有的牌在计分时变为{C:attention}玻璃牌"
+   "打出的所有牌",
+   "将在计分时变为{C:attention}玻璃牌",
 }
 Souls.j_vagabond.text = {
-  "如果在出牌时资金",
-  "不大于自身{C:attention}售价",
-  "则获得一张{C:purple}塔罗牌"
+   "每次出牌时",
+   "如果当前资金数",
+   "不大于此牌{C:attention}售价",
+   "则获得一张{C:purple}塔罗牌",
+   "{C:inactive}(必须有空间)"
 }
 Souls.j_half.text = {
-   "如果身上的{C:blue}灵魂{}不大于{C:attention}2",
-   "{C:mult}+#1#{}倍率"
+   "如果此牌拥有的",
+   "{C:blue}灵魂{}数量不大于{C:attention}2",   
+   "则{C:mult}+#1#{}倍率"
 }
 Souls.j_stencil.text = {
-  "每个剩余的{C:blue}灵魂{}槽位",
-  "额外提供{X:mult,C:white}X#1#{}倍率",
+   "每个空的{C:blue}灵魂{}槽位",
+   "获得{X:mult,C:white}X#1#{}倍率",
 }
 Souls.j_egg.text = {
-   "回合结束时，本卡售价+#1#"
+   "回合结束时",
+   "此牌的售价{C:money}+#1#",
 }
 Souls.j_golden.text = {
-   "回合结束时，获得",
-   "与自身售价相等的资金"
+   "回合结束时",
+   "获得等同于此牌",
+   "{C:money}售价{}的资金",
 }
 Souls.j_misprint.text = {
-   "{C:blue}灵魂{}槽位{C:attention}+1",
-   "选择{C:attention}盲注{}时,将你身上",
-   "其它灵魂{C:attention}替换",
-   "为除此灵魂外的随机灵魂"
+   "{C:attention}+1{}{C:blue}灵魂{}槽位",
+   "选择{C:attention}盲注{}时",
+   "将此牌的其它{C:blue}灵魂",
+   "{C:attention}替换{}为除此灵魂外的 {C:blue}灵魂"
 }
 Souls.j_baseball.text = {
-   "身上的每个{C:blue}灵魂{}",
-   "提供{X:mult,C:white}X#1#{}倍率"
+   "此牌拥有的每个{C:blue}灵魂{}",
+   "给予{X:mult,C:white}X#1#{}倍率"
 }
 Souls.j_credit_card.text = {
-   "可以负债20",
-   "回合结束后，获得",
-   "与自身售价等量的额度",
-   "{C:inactive}(当前额度:{C:attention}#1#{C:inactive})"
+   "可以负债最多{C:red}-20",
+   "回合结束时",
+   "额外获得等同于",
+   "此牌售价的额度",
 }
 Souls.j_ceremonial.text = {
-   "选择{C:attention}盲注{}时，摧毁右侧的小丑牌",
-   "并将其购买价格乘自身稀有度",
-   "加到这张牌的{C:attention}售价{}上"
+   "选择{C:attention}盲注{}时",
+   "摧毁{C:attention}右侧{}的小丑牌",
+   "并根据此牌的{C:red}稀有度",
+   "提高被摧毁的牌的购买价格，将之",
+   "加到此牌的{C:attention}售价{}上",
+   "{C:inactive}(普通:1倍 罕见:2倍 稀有:3倍){}",
+   "{C:inactive}(传奇及其他:4倍){}",
 }
 Souls.j_banner.text = {
-   "每一个剩余的弃牌次数",
-   "提供与自身售价等量的倍率 "
+   "提供等同于本回合中",
+   "剩余{C:attention}弃牌次数",
+   "乘此牌{C:money}售价{}的倍率"
 }
 Souls.j_loyalty_card.text = {
-  "X与本回合出牌次数等量的倍率"
+  "提供等同于本回合中",
+  "已使用{C:attention}出牌次数{}的倍率",
 }
 Souls.j_chaos.text = {
-   "回合结束时，获得",
-   "与自身稀有度等量的",
-   "商店免费重置次数"
+   "回合结束时",
+   "根据此牌{C:red}稀有度{}",
+   "获得免费重掷次数",
+   "{C:inactive}(普通:1次 罕见:2次 稀有:3次){}",
+   "{C:inactive}(传奇及其他:4次){}",
 }
 Souls.j_blackboard.text = {
    "若手牌中不存在",
@@ -363,43 +391,44 @@ Souls.j_juggler.text = {
 }
 Souls.j_cartomancer.text = {
    "选择{C:attention}盲注{}时",
-   "生成一张随机{C:purple}水晶",
-   "{C:inactive}(须有空间)"
+   "随机生成一张{C:purple}水晶",
+   "{C:inactive}(必须有空间)"
 }
 Souls.j_hallucination.text = {
-   "使用一张消耗区的牌后",
-   "{C:green}#2#/#1#{}概率花费{C:attention}$#3#",
-   "复制此消耗牌",
-   "{C:inactive}(须有空间)"
+   "使用消耗牌时",
+   "有{C:green}#2#/#1#{}几率",
+   "花费{C:attention}$#3#{}复制此消耗牌",
+   "{C:inactive}(必须有空间)"
 }
 Souls.j_luchador.text = {
-   "第{C:attention}二{}次出牌后",
-   "使当前{C:attention}boss盲注{}失效"
+   "每回合{C:attention}第二次{}出牌后",
+   "会消除当前回合中",
+   "{C:attention}Boss盲注{}的限制条件"
 }
 Souls.j_diet_cola.text = {
-   "出售此牌后",
-   "{C:attention}额外触发{}一次",
-   "出售此牌的效果"
+   "出售此牌时",
+   "{C:attention}重新触发{}一次",
+   "出售此牌时的效果"
 }
 ------------------------
 Souls.c_strength.text = {
-   "打出的每张计分牌",
-   "的点数{C:attention}+#1#"
+   "打出的每一张牌",
+   "在计分时{C:attention}+#1#{}点数"
 }
 Souls.c_chariot.text = {
-   "留在手中的钢铁牌",
-   "将给予{X:mult,C:white}X#1#{}倍率"
+   "每张手中的{C:attention}钢铁牌",
+   "额外给予{X:mult,C:white}X#1#{}倍率"
 }
 Souls.c_heirophant.text = {
-   "打出的每张记分牌",
-   "{C:blue}+#1#{}筹码"
+   "打出的每一张牌",
+   "在计分时{C:blue}+#1#{}筹码"
 }
 Souls.c_hermit.text = {
    "售价{C:attention}X#1#"
 }
 Souls.c_temperance.text = {
    "获得等同于此牌",
-   "{C:attention}X#1#{}售价的资金"
+   "{C:attention}#1#倍{}售价的{C:money}资金"
 }
 Souls.c_emperor.text = {
    "{C:attention}+#1#{}消耗牌槽位"
@@ -418,11 +447,15 @@ function soul_vars(soul)
     return vars
 end
 
+function create_soul_name(tag)
+	return Souls[tag].name or localize{type = 'name_text', key = tag, set = G.P_CENTERS[tag].set}.."之魂"
+end
+
 for k, v in pairs(Souls) do
     local tag = v.tag
-	G.localization.descriptions.Other[v.tag] = {
-	    name = v.name or localize{type = 'name_text', key = tag, set = G.P_CENTERS[tag].set}.."之魂",
-	    text = v.text or {""}
+	G.localization.descriptions.Other[tag] = {
+	    name = create_soul_name(tag),
+	    text = v.text
 	}
 end
 	   
@@ -689,7 +722,7 @@ end
 
 Soulss.j_vagabond.calculate = function(self,card,context)
    if context.after and context.cardarea == G.jokers then
-       if G.GAME.dollars <= card.sell_cost then
+       if G.GAME.dollars <= card.sell_cost and #G.consumeables.cards < G.consumeables.config.card_limit then
 			G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
 			G.E_MANAGER:add_event(Event({
 				trigger = 'before',
@@ -702,7 +735,7 @@ Soulss.j_vagabond.calculate = function(self,card,context)
 					return true
 				end)}))
 			 card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_plus_tarot')})
-      end
+	  end
    end
 end
 
@@ -775,14 +808,16 @@ Soulss.j_ceremonial.calculate = function(self,card,context)
           if G.jokers.cards[i] == card and i < #G.jokers.cards and not G.jokers.cards[i+1].ability.eternal then
 		     local sliced_card = G.jokers.cards[i+1]
              sliced_card.getting_sliced = true
+			 local r = {1,2,3,4}
+             local multiple =  r[card.config.center.rarity] or r[4]
 			 G.E_MANAGER:add_event(Event({func = function()
-                card.ability.extra_value = card.ability.extra_value + card.config.center.rarity * G.jokers.cards[i+1].cost
+				card.ability.extra_value = card.ability.extra_value + multiple * G.jokers.cards[i+1].cost
                 card:set_cost()
                 card:juice_up(0.8, 0.8)
                 G.jokers.cards[i+1]:start_dissolve({HEX("57ecab")}, nil, 1.6)
                 play_sound('slice1', 0.96+math.random()*0.08)
              return true end }))
-			 card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = "+"..tostring(G.jokers.cards[i+1].config.center.rarity * G.jokers.cards[i+1].cost)..localize("b_sellcost"), colour = G.C.MONEY})
+			 card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = "+"..tostring(multiple * G.jokers.cards[i+1].cost)..localize("b_sellcost"), colour = G.C.MONEY})
 		   end
        end
    end
@@ -823,8 +858,10 @@ end
 
 Soulss.j_chaos.calculate = function(self,card,context)
    if context.end_of_round  and not context.individual and not context.repetition and not context.blueprint then
-      G.GAME.current_round.free_rerolls = G.GAME.current_round.free_rerolls  + card.config.center.rarity 
-	  card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = "+"..tostring(card.config.center.rarity)..localize("b_freeroll"), colour = G.C.GREEN}) 
+      local r = {1,2,3,4}
+	  local add = r[card.config.center.rarity] or r[4]
+      G.GAME.current_round.free_rerolls = G.GAME.current_round.free_rerolls  + add 
+	  card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = "+"..tostring(add)..localize("b_freeroll"), colour = G.C.GREEN}) 
 	  calculate_reroll_cost(true)
     end
 end
@@ -1140,7 +1177,7 @@ function Card:can_soul_break()
          (G.CONTROLLER.locked) or 
          (G.GAME.STOP_USE and G.GAME.STOP_USE > 0) 
          then return false end
-   if next(self.ability.souls) or self.ability.extra == "crystal" or self.ability.eternal and not find_soul(self,"j_enhance_soul_eternal") or  (G.GAME.dollars-G.GAME.bankrupt_at - G.P_CENTERS[self.config.center_key].rarity < 0) or soul_break_blacklist[self.config.center_key] then
+   if next(self.ability.souls) or self.ability.extra == "crystal" or self.ability.eternal and not find_soul(self,"j_enhance_soul_eternal") or  (G.GAME.dollars-G.GAME.bankrupt_at - calculate_break_value(self) < 0) or soul_break_blacklist[self.config.center_key] then
       return false
    end
     return true
@@ -1211,7 +1248,8 @@ function Card:soul_break()
     G.CONTROLLER:save_cardarea_focus('jokers')
     if self.children.use_button then self.children.use_button:remove(); self.children.use_button = nil end
     if self.children.sell_button then self.children.sell_button:remove(); self.children.sell_button = nil end
-	ease_dollars(-G.P_CENTERS[self.config.center_key].rarity)
+	local dollars = calculate_break_value(self)
+	ease_dollars(-dollars)
 	self:start_dissolve()
 	play_sound('glass1')
 	G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
@@ -1281,7 +1319,7 @@ function G.UIDEF.soul_buttons(card)
     local soul_break = nil
     if card.area and card.area.config.type == 'joker' and card.ability.set == 'Joker' and  card.ability.extra ~= "crystal" then
 		 if not next(card.ability.souls) then
-		      local dolloars = G.P_CENTERS[card.config.center_key].rarity
+		      local dolloars = calculate_break_value(card)
 			  soul_break = { n=G.UIT.ROOT, config = {ref_table = card, minw = 0.1, maxw = 1.3, padding = 0.1, align = 'bm', colour = G.C.BLUE, shadow = true, r = 0.08, minh = 0.6, one_press = false, button = 'soul_break', func = "can_soul_break", hover = true}, nodes={
                     {n=G.UIT.T, config={text = "$"..dolloars..localize('b_break'),colour = G.C.WHITE, scale = 0.4}}
               }}
@@ -1334,6 +1372,7 @@ function Game:init_game_object()
     local t = init_game_objectref(self)
 	t["soul_consumeable_usage"] = {}
 	t["soul_slots_max"] = 2
+	t["soul_usage"] = 3
 	return t
 end
 
@@ -1354,7 +1393,12 @@ function Card:is_face(from_boss)
     end
 end
 
-
+function calculate_break_value(card)
+    local r = {2,3,4,7}
+	local value_rarity = r[card.config.center.rarity] or r[4]
+	local value = joker_soul[card.config.center_key] and joker_soul[card.config.center_key].value or value_rarity
+	return value 
+end
 function create_soul(area,tag)
 	local soul = nil
 	if not area then
@@ -1366,7 +1410,8 @@ function create_soul(area,tag)
 			soul = enhance_soul[tag]
 		else 
 		    local rarity = {"common_soul","uncommon_soul","rare_soul","legendary_soul"}
-			soul = rarity_soul[rarity[G.P_CENTERS[tag].rarity]] or rarity_soul[rarity[4]]
+			local rarity_soul_tag = rarity[G.P_CENTERS[tag].rarity] or rarity[4]
+			soul = rarity_soul[rarity_soul_tag] 
 		end
 	end
     if area then
@@ -1381,23 +1426,14 @@ function create_soul(area,tag)
     return copy_table(soul)
 end
 
-function soul_text_transform(soul)
-    local tag = soul.tag
-    if joker_soul[tag] or consumeable_soul[tag] then
-          return localize{type = 'name_text', key = tag, set = G.P_CENTERS[tag].set}.."之魂"
-    elseif enhance_soul[tag] then
-       return enhance_soul[tag].name
-    elseif rarity_soul[tag] then
-       return rarity_soul[tag].name
-	end
-end
+
 
 local use_consumeableref = Card.use_consumeable
 function Card:use_consumeable(area, copier)
 	use_consumeableref(self,area,copier)
 	local o = consumeable_soul[self.config.center_key]
-	local usage = o and (o.usage - 1) or 2
-	if G.GAME.soul_consumeable_usage[self.config.center_key] ==  usage then
+	local usage = o and (o.usage - 1) or (G.GAME.soul_usage - 1)
+	if G.GAME.soul_consumeable_usage[self.config.center_key] == usage then
 	    if #G.jokers.cards < G.jokers.config.card_limit then
 	        G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
                 play_sound('timpani')
@@ -1417,7 +1453,7 @@ function Card:use_consumeable(area, copier)
 		     card_eval_status_text(self, 'extra', nil, nil, nil, {message = localize('k_no_room_ex')})
 		 end
     else
-	     G.GAME.soul_consumeable_usage[self.config.center_key] =  (G.GAME.soul_consumeable_usage[self.config.center_key] or 0) + 1
+	     G.GAME.soul_consumeable_usage[self.config.center_key] = (G.GAME.soul_consumeable_usage[self.config.center_key] or 0) + 1
     end
 end
 
@@ -1426,7 +1462,7 @@ function Card.generate_UIBox_ability_table(self)
    local generate_UIBox_ability_table_val = generate_UIBox_ability_table_ref(self)
    local main_text = generate_UIBox_ability_table_val.main		
    local info = generate_UIBox_ability_table_val.info
-
+   
    if not(soul_info_indicate and soul_info_indicate == 1)then
        local souls = self.ability.souls 
        local souls_tag = {}
@@ -1444,7 +1480,16 @@ function Card.generate_UIBox_ability_table(self)
 				   desc_nodes.name = G.localization.descriptions.Other[v.tag].name
 			   end 
 		   end
-	   end
+	      if self.ability.consumeable then
+		      local o = consumeable_soul[self.config.center_key]
+	          local usage = o and o.usage or G.GAME.soul_usage
+			  local usage_ = usage - (G.GAME.soul_consumeable_usage[self.config.center_key] or 0 )
+			  info[#info + 1] = {}
+			  local desc_nodes = info[#info]
+			  localize{type = 'other', key = "consumeable_count", nodes = desc_nodes,vars = {usage_ }}
+			  desc_nodes.name = G.localization.descriptions.Other["consumeable_count"].name
+		  end
+	  end
 		  if #self.ability.souls > 0 then
 			main_text[#main_text + 1] = {
 				{
@@ -1462,7 +1507,7 @@ function Card.generate_UIBox_ability_table(self)
 			   {
 					n = G.UIT.T,
 					config = {
-						text = soul_text_transform(self.ability.souls[i]),
+						text = create_soul_name(self.ability.souls[i].tag),
 						colour = G.C.PURPLE,
 						scale = 0.24
 					}
