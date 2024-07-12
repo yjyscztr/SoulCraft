@@ -2,7 +2,7 @@
 --- MOD_NAME: Soulcraft
 --- MOD_ID: soulcraft
 --- MOD_AUTHOR: [AMADEUS]
---- MOD_DESCRIPTION: enhance your jokers by souls
+--- MOD_DESCRIPTION: enhance your jokers through souls
 --- BADGE_COLOUR: 9400D3
 --- PRIORITY: 999999999999999
 ------------------------------
@@ -268,11 +268,13 @@ Souls.j_perkeo.text = {
    "并给予其{C:dark_edition,s:0.9}负片{}效果"
 }
 Souls.j_madness.text = {
-    "选择{C:attention}盲注{}时，此牌某些数值{C:mult}+#1#",
+    "选择{C:attention}盲注{}时",
+	"此牌某些数值{C:mult}+#1#",
 	"然后{C:attention}摧毁{}一张小丑牌"
 }
 Souls.j_vampire.text = {
-    "每打出一张计分的增强牌，此牌某些数值{C:mult}+#1#",
+    "每打出一张计分的增强牌",
+	"此牌某些数值{C:mult}+#1#",
 	"并移除卡牌的{C:attention}增强效果"
 }
 Souls.j_mime.text = {
@@ -297,7 +299,8 @@ Souls.j_baron.text = {
 }
 Souls.j_rough_gem.text = {
    "若打出的记分牌的花色",
-   "是当前所有记分牌中数量{C:attention}最多{}的花色之一",
+   "是当前所有记分牌中",
+   "数量{C:attention}最多{}的花色之一",
    "其给予{C:money}$#1#"
 }
 Souls.j_oops.text = {
@@ -454,7 +457,7 @@ end
 
 for k, v in pairs(Souls) do
     local tag = v.tag
-	G.localization.descriptions.Other[tag] = {
+	G.localization.descriptions.Other["soul"..tag] = {
 	    name = create_soul_name(tag),
 	    text = v.text
 	}
@@ -1472,13 +1475,13 @@ function Card.generate_UIBox_ability_table(self)
 	   end
        if not(soul_info_indicater and soul_info_indicater == 1 ) then
 		   for k, v in pairs(self.ability.souls) do
-			   if not souls_tag[v.tag] and G.localization.descriptions.Other[v.tag] then
+			   if not souls_tag[v.tag] and G.localization.descriptions.Other["soul"..v.tag] then
 				   souls_tag[v.tag] = true
 				   info[#info + 1] = {}
 				   local desc_nodes = info[#info]
 				   local loc_vars = soul_vars(v)
-				   localize{type = 'other', key = v.tag, nodes = desc_nodes,vars = loc_vars}
-				   desc_nodes.name = G.localization.descriptions.Other[v.tag].name
+				   localize{type = 'other', key = "soul"..v.tag, nodes = desc_nodes,vars = loc_vars}
+				   desc_nodes.name = G.localization.descriptions.Other["soul"..v.tag].name
 			   end 
 		   end
 	      if self.ability.consumeable then
