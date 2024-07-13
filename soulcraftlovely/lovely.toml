@@ -17,9 +17,12 @@ match_indent = false
 [[patches]]
 [patches.pattern]
 target = "card.lua"
-pattern = '''not self.ability.eternal then'''
-position = "at"
+pattern = '''if (G.SETTINGS.tutorial_complete or G.GAME.pseudorandom.seed ~= 'TUTORIAL' or G.GAME.round_resets.ante > 1) and'''
+position = "before"
 payload = '''
-      not self.ability.eternal or (self.ability.eternal and find_soul(self,"enhance_soul_eternal")) then
+       if (G.SETTINGS.tutorial_complete or G.GAME.pseudorandom.seed ~= 'TUTORIAL' or G.GAME.round_resets.ante > 1) and self.area and self.area.config.type == 'joker' and find_soul(self,"enhance_soul_eternal") then
+          return true
+       end
 '''
 match_indent = false
+
