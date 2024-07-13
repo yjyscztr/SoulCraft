@@ -219,7 +219,7 @@ Souls.enhance_soul_eternal.text={
     "选择{C:attention}盲注{}时",
     "给予小丑牌{C:dark_edition}永恒{}",
     "并使得此牌可以",
-	"{C:attention}无视永恒{}被售出或分解"
+	"{C:attention}无视永恒{}被售出"
 }
 Souls.enhance_soul_slot.text={
    "{C:attention}+#1#{}{C:blue}灵魂{}槽位"
@@ -356,6 +356,7 @@ Souls.j_credit_card.text = {
    "回合结束时",
    "额外获得等同于",
    "此牌售价的额度",
+   "{C:inactive}(当前额外额度:{C:attention}#1#{C:inactive})"
 }
 Souls.j_ceremonial.text = {
    "选择{C:attention}盲注{}时",
@@ -651,7 +652,7 @@ end
 
 Soulss.j_mystic_summit.calculate = function(self,card,context)
    if context.cardarea == G.jokers and context.before and G.GAME.current_round.discards_left == 0 then
-	  soul_increase(card,seolf.extra)
+	  soul_increase(card,self.extra)
    end
 end
 
@@ -1387,14 +1388,6 @@ function find_soul(card,soul)
       end
    end
    return false
-end
-
-function Card:is_face(from_boss)
-    if self.debuff and not from_boss then return end
-    local id = self:get_id()
-          if 1 then
-            return true
-    end
 end
 
 function calculate_break_value(card)
